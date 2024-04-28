@@ -228,17 +228,7 @@
 <script>
     $(document).ready(function() {
 
-        const addToCart = document.querySelectorAll(".addToCart"); // Use querySelectorAll to select all elements with class foodCart
-    console.log("🚀 ~ addToCart:", addToCart)
-    
-
-    addToCart.forEach(addToCart => {
-        addToCart.addEventListener('click', function() {
-            console.log("The Product is add to cart")
-            alert("The Product is add to cart")
-        })
-    })
-
+   
 
 
 
@@ -295,3 +285,66 @@
     
     </script>
 <!-- Menu End -->
+
+
+
+
+<!-- <script>
+    // Function to add item to cart
+    function addToCart(event) {
+      // Get the product details from the button's data attributes
+      const productName = event.target.dataset.product;
+      const productPrice = parseFloat(event.target.dataset.price);
+  
+      // Example: You can send this data to a backend server for processing or handle it locally
+      // For demonstration, let's just log the product details
+      console.log('Added to cart:', productName, productPrice);
+    }
+  
+    // Add event listeners to all buttons with the class 'add-to-cart-btn'
+    const addToCartButtons = document.querySelectorAll('.addToCart');
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', addToCart);
+      console.log("🚀 ~ addToCart is runing :", addToCart)
+    });
+  </script>
+   -->
+<script>
+
+    let allProducts=document.querySelectorAll(".addToCart");
+
+
+allProducts.forEach((btn)=>{
+
+btn.addEventListener('click',(e)=>{
+
+    console.log("The add to cart product is ",e)
+    //let ProductId=document.querySelector(".ProductId")
+    console.log(btn.parentElement)
+    let ProductId=btn.parentElement.firstElementChild;
+    console.log(ProductId)
+    let proPrice=document.getElementById("totalQuantity").innerHTML;
+    let totalPrice=document.getElementById("totalPrice").innerHTML;
+
+    console.log(proPrice)
+    console.log(totalPrice)
+    
+
+    $.post("/addToCart",
+            {
+                ProductId:ProductId
+            },
+            function (data, status) {
+                    proPrice=data.productCart.totalQty;
+                    totalPrice.innerText=data.productCart.totalPrice;
+                    console.log(data.productCart)
+                    document.getElementById("totalQan").innerText=data.productCart;
+
+
+            });
+    
+})    
+})
+
+</script>
+

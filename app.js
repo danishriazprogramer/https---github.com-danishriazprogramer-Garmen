@@ -31,6 +31,10 @@ app.get('/api/admin', (req, res) => {
   res.render('admin/index');
 });
 
+app.get('/api/menu', (req, res) => {
+  res.render('Client/menu');
+});
+
 app.get('/api/admin/product', (req, res) => {
   res.render('admin/products/index');
 });
