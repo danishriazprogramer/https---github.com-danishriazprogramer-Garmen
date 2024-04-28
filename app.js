@@ -46,10 +46,10 @@ app.get('/api/admin/product/get/:id', async (req, res) => {
 });
 
 app.post('/api/admin/product/update/:id', async (req, res) => {
-  console.log("🚀 ~ app.post ~ req:", req);
+  console.log('🚀 ~ app.post ~ req:', req);
   const { id } = req.params;
   console.log('🚀 ~ app.post ~ id:', id);
-  const  name  = req.body.LOVE;
+  const name = req.body.LOVE;
   console.log(name);
   console.log('🚀 ~ app.post ~ body:', name);
   let data = await Product.findByIdAndUpdate(id);
@@ -66,43 +66,38 @@ app.use('/api/admin', productRoutes);
 app.use('/api/user', orderRoutes);
 app.use('/api/category', categoryRoutes);
 
+app.get('/api/cart', async (req, res) => {
+  res.render('client/cart');
+});
+app.post('/api/user/webhook', async (req, res) => {
+  console.log('The webHook is runing');
+  req.body;
+  //
 
-app.get("/api/cart", async(req,res)=>{
-  res.render("client/cart")
-})
-app.post("/api/user/webhook", async (req,res)=>{
+  console.log('🚀 ~ app.post ~ body:', req.body);
+  res.send(req.body);
+});
 
-  console.log("The webHook is runing")
-  req.body
- // 
- 
- console.log("🚀 ~ app.post ~ body:", req.body)
-  res.send(req.body)
-
-})
-
-app.post("/api/user/addData", async (req,res)=>{
-
-  console.log("The addData is runing")
+app.post('/api/user/addData', async (req, res) => {
+  console.log('The addData is runing');
 
   const data = {
     title: 'foo',
     body: 'bar',
-    userId: 1
+    userId: 1,
   };
-  
-  axios.post('http://localhost:8080/api/user/webhook', data)
+
+  axios
+    .post('http://localhost:8080/api/user/webhook', data)
     .then(response => {
       console.log(response.data);
       // Once the webhook response is received and processed, send the response to the client
-      res.send("The addData is runing");
+      res.send('The addData is runing');
     })
     .catch(error => {
       console.log(error);
       // If an error occurs while sending the webhook request, handle the error and send an appropriate response
-      res.status(500).send("Error occurred while sending data to webhook");
+      res.status(500).send('Error occurred while sending data to webhook');
     });
 });
 export { app };
-
-  
